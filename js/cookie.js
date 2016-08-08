@@ -17,7 +17,5 @@ function getCookie(cname) {
       return c.substring(name.length, c.length);
     }
   }
-  var uid = (new Date()).getTime();
-  setCookie("chat-uid", uid, 1);
-  return getCookie("chat-uid");
+  return "";
 }
