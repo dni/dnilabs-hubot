@@ -39,6 +39,14 @@ module.exports = (robot) ->
       user.msgs.push data
       robot.messageRoom '#dnilabs', "user #{data.uid}: #{data.message}"
 
+    robot.hear /useragent/i, (res) ->
+      msg = res.message.text
+      user = users[msg.splice(1, 1)]
+      if user
+        robot.messageRoom '#dnilabs', user.userAgent
+      else
+        robot.messageRoom '#dnilabs', "user not fount"
+
     robot.hear /livechat/i, (res) ->
       msg = res.message.text.split ":"
       message =
