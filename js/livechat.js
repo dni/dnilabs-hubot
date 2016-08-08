@@ -53,11 +53,11 @@ var App = new AppView();
 
 jQuery("body").append(App.render().el);
 
-if (!getCookie("username")) {
+if (!getCookie("chat-uid")) {
   tstamp = (new Date()).getTime();
   setCookie("chat-uid", tstamp, 1);
   console.log("created cookie "+ tstamp);
-  if (!getCookie("username")) {
+  if (!getCookie("chat-uid")) {
     console.log("cookie disabled");
   }
 }
@@ -69,7 +69,7 @@ socket.on('message', function (data) {
 });
 
 socket.emit("initUser", {
-  uid: getCookie("chat-uid") || tstamp,
+  uid: getCookie("chat-uid"),
   userAgent: window.navigator.userAgent,
   url: window.location.href
 });
