@@ -41,10 +41,12 @@ module.exports = (robot) ->
 
     robot.hear /livechat/i, (res) ->
       msg = res.message.text.split ":"
-      socket.emit 'message',
+      message =
         date: new Date()
-        action: msg.splice 0
-        userid: msg.splice 0
-        username: msg.splice 0
+        action: msg.splice 0, 1
+        userid: msg.splice 0, 1
+        username: msg.splice 0, 1
         message: msg.join ":"
+      console.log message
+      socket.emit 'message', message
 
