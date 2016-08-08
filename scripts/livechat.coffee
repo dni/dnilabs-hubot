@@ -40,12 +40,11 @@ module.exports = (robot) ->
       robot.messageRoom '#dnilabs', "user #{data.uid}: #{data.message}"
 
     robot.hear /livechat/i, (res) ->
-      msg = res.message.text.split " "
-      console.log msg
-      action = msg.splice 0
-      userid = msg.splice 0
-      message = msg.join " "
-      socket.emit 'message', hello: 'world'
+      msg = res.message.text.split ":"
+      socket.emit 'message',
+        date: new Date()
+        action: msg.splice 0
+        userid: msg.splice 0
+        username: msg.splice 0
+        message: msg.join ":"
 
-  robot.hear /dnilabs/i, (res) ->
-    robot.send "dnilabs is the best"
