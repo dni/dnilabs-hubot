@@ -25,6 +25,7 @@ module.exports = (robot) ->
       user = users[data.uid]
       if user
         user.socket = socket
+        user.url = data.url
         if user.msgs
           user.msgs.forEach (msg)->
             socket.emit 'message', msg
@@ -48,6 +49,10 @@ module.exports = (robot) ->
     else
       robot.messageRoom '#dnilabs', "user not fount"
 
+  robot.hear /listusers/i, (res) ->
+    users.forEach (user)->
+      robot.messageRoom '#dnilabs', "#{user.uid}: #{user.url}: #{user.userAgent}"
+
   robot.hear /livechat/i, (res) ->
     msg = res.message.text.split ":"
     action = msg.splice 0, 1
@@ -59,6 +64,7 @@ module.exports = (robot) ->
         userid: userid
         username: msg.splice 0, 1
         message: msg.join ":"
+      user.msgs.push message
       user.socket.emit 'message', message
     else
       res.send "message not sent, user not found"
