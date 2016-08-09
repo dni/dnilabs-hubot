@@ -50,7 +50,8 @@ module.exports = (robot) ->
       robot.messageRoom '#dnilabs', "user not fount"
 
   robot.hear /listusers/i, (res) ->
-    users.forEach (user)->
+    users.forEach (key)->
+      user = users[key]
       robot.messageRoom '#dnilabs', "#{user.uid}: #{user.url}: #{user.userAgent}"
 
   robot.hear /livechat/i, (res) ->
