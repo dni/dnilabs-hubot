@@ -10,6 +10,8 @@
 #livechat ul {
   padding:0;
   list-style:none;
+  max-height: 150px;
+  overflow-y: scroll;
 }
 #livechat i {
   color:#969696;
