@@ -5,9 +5,11 @@
   position:fixed;
   bottom:0;
   right:0;
+  font-size:14px;
 }
 #livechat ul {
- list-style:none;
+  padding:0;
+  list-style:none;
 }
 #livechat i {
   color:#969696;
