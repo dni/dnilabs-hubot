@@ -18,6 +18,7 @@ var MessageView = Backbone.View.extend({
 });
 
 var AppView = Backbone.View.extend({
+  id: "livechat",
   template: _.template("<ul id='chat-messages'></ul><input id='chat' type='text' />"),
   initialize: function() {
     this.listenTo(Messages, 'add', this.addOne);

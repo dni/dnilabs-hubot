@@ -1,3 +1,9 @@
-body {
-  background:purple;
+#livechat {
+  background:#ddd;
+  position:fixed;
+  bottom:0;
+  right:0;
+}
+#livechat ul {
+ list-style:none;
 }
