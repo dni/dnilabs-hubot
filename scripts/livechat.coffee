@@ -49,11 +49,11 @@ module.exports = (robot) ->
       robot.messageRoom '#dnilabs', "user not fount"
 
   robot.hear /livechat/i, (res) ->
+    msg = res.message.text.split ":"
     action = msg.splice 0, 1
     userid = msg.splice 0, 1
     user = users[userid]
     if user
-      msg = res.message.text.split ":"
       message =
         date: new Date()
         userid: userid
