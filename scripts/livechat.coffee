@@ -4,8 +4,8 @@ users = {}
 
 module.exports = (robot) ->
 
-  # serve js
-  robot.router.use "/js", express.static "#{process.cwd()}/js"
+  # serve static
+  robot.router.use "/static", express.static "#{process.cwd()}/static"
 
   throw new Error 'HTTP server not available' unless (server = robot.server)?
 
