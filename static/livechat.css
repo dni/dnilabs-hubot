@@ -1,9 +1,19 @@
 #livechat {
+  padding:6px;
   background:#ddd;
+  border: 1px solid #b7b2b2;
   position:fixed;
   bottom:0;
   right:0;
 }
 #livechat ul {
  list-style:none;
+}
+#livechat i {
+  color:#969696;
+  margin-right:6px;
+}
+#livechat input {
+  width: 190px;
+  height: 22px;
 }
