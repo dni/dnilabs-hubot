@@ -16,19 +16,19 @@ module.exports = (robot) ->
 
     socket.on 'disconnect', ->
       timeout = setTimeout ->
-        robot.messageRoom '#dnilabs', "a user disconnected"
+        robot.messageRoom '#dnilabs', "user #{socket.userid} disconnected"
       , 3000
 
     socket.on 'initUser', (data)->
       clearTimeout timeout
-      console.log data
+      socket.userid = data.uid
       user = users[data.uid]
       if user
+        user.socket = socket
         if user.msgs
           user.msgs.forEach (msg)->
             socket.emit 'message', msg
       else
-        socket.userid = data.uid
         data.socket = socket
         users[data.uid] = data
       robot.messageRoom '#dnilabs', "user #{data.uid} views #{data.url}"
