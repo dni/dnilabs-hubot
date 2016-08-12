@@ -1,5 +1,5 @@
 express = require "express"
-bochelli = require "messages.json"
+bochelli = require "./messages.json"
 
 timeout = null
 
