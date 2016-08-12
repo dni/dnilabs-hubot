@@ -47,6 +47,7 @@ var AppView = Backbone.View.extend({
   addOne: function(msg) {
     var view = new MessageView({model: msg});
     var scroll = this.$el.find("#chat-messages");
+    debugger;
     scroll.append(view.render().el);
     scroll.scrollTop = scroll.scrollHeight;
   },
