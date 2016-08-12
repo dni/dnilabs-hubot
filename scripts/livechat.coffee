@@ -1,8 +1,14 @@
 express = require "express"
+bochelli = require "messages.json"
+
 timeout = null
-users = {}
 
 module.exports = (robot) ->
+
+  # init users in brain
+  robot.brain.set "users", {} unless robot.brain.get "users"
+  users = robot.brain.get "users"
+
 
   # serve static
   robot.router.use "/static", express.static "#{process.cwd()}/static"
@@ -16,7 +22,7 @@ module.exports = (robot) ->
 
     socket.on 'disconnect', ->
       timeout = setTimeout ->
-        robot.messageRoom '#dnilabs', "user #{socket.userid} disconnected"
+        robot.messageRoom '#dnilabs', "user #{socket.userid} closed one socket"
       , 3000
 
     socket.on 'initUser', (data)->
@@ -29,9 +35,19 @@ module.exports = (robot) ->
         if user.msgs
           user.msgs.forEach (msg)->
             socket.emit 'message', msg
+        else
+          message =
+            date: new Date()
+            userid: userid
+            username: "Bochelli"
+            message: bochelli.welcome
+            message: "Hi! Mein Name ist Bochelli. Ich bin ein Chatroboter ich leite Ihre Nachrichten in den Chat, wenn jemand Online ist wird er sich melden, ansonten leite ich Ihre Nachrichten per Email weiter"
+          user.msgs.push message
+
       else
         data.socket = socket
         users[data.uid] = data
+      robot.brain.set "users", users
       robot.messageRoom '#dnilabs', "user #{data.uid} views #{data.url}"
 
     socket.on 'sendmessage', (data)->
@@ -39,6 +55,7 @@ module.exports = (robot) ->
       if !user.msgs
         user.msgs = []
       user.msgs.push data
+      robot.brain.set "users", users
       robot.messageRoom '#dnilabs', "user #{data.uid}: #{data.message}"
 
   robot.hear /useragent/i, (res) ->
@@ -66,6 +83,7 @@ module.exports = (robot) ->
         username: msg.splice 0, 1
         message: msg.join ":"
       user.msgs.push message
+      robot.brain.set "users", users
       user.socket.emit 'message', message
     else
       res.send "message not sent, user not found"
