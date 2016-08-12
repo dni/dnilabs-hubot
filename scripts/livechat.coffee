@@ -8,6 +8,7 @@ module.exports = (robot) ->
   # init users in brain
   robot.brain.set "users", {} unless robot.brain.get "users"
   users = robot.brain.get "users"
+  console.log "brain", users
 
 
   # serve static
@@ -35,17 +36,15 @@ module.exports = (robot) ->
         if user.msgs
           user.msgs.forEach (msg)->
             socket.emit 'message', msg
-        else
-          message =
+      else
+        data.socket = socket
+        data.lastActivity = new Date()
+        data.msgs = []
+        data.msgs.push
             date: new Date()
             userid: userid
             username: "Bochelli"
             message: bochelli.welcome
-            message: "Hi! Mein Name ist Bochelli. Ich bin ein Chatroboter ich leite Ihre Nachrichten in den Chat, wenn jemand Online ist wird er sich melden, ansonten leite ich Ihre Nachrichten per Email weiter"
-          user.msgs.push message
-
-      else
-        data.socket = socket
         users[data.uid] = data
       robot.brain.set "users", users
       robot.messageRoom '#dnilabs', "user #{data.uid} views #{data.url}"
