@@ -3,7 +3,6 @@ message =
 
 
 express = require "express"
-bochelli = require "./messages.json"
 
 timeout = null
 
